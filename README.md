@@ -2,15 +2,40 @@
 
 ![FinetuneOrch Screenshot](docs/images/screenshot.png)
 
-# Fine-Tuning Orchestration Dashboard
+# Fine-Tuning Orchestration Dashboard (FinetuneOrch)
 
-This project provides a web-based dashboard to orchestrate and monitor `easy-dataset`, `LLaMA-Factory`, and other services, simplifying the workflow for fine-tuning large language models. Once a fine tuned model is generated (via LLama-Factory, though other solutions can be used), easily convert to GGUF using llama-cpp and then load the GGUF model to your local Ollama instance using the dashboard. 
+FinetuneOrch is a web-based dashboard that simplifies the process of fine-tuning large language models by orchestrating a suite of powerful open-source tools. It provides a unified interface to monitor `easy-dataset`, `LLaMA-Factory`, and the subsequent model conversion and deployment pipeline with `llama.cpp` and `Ollama`.
 
-## Features
+---
 
--   **Service Orchestration:** A `docker-compose.yml` file to launch and manage all required services.
--   **Web-Based UI:** A clean, simple interface built with React to monitor the services.
--   **Containerized Deployment:** The entire application is containerized with Docker for easy and reproducible deployment.
+## Why This Project?
+
+The workflow for fine-tuning LLMs often involves juggling multiple command-line interfaces, services, and log files. FinetuneOrch streamlines this by providing a single "mission control" panel, enabling you to:
+
+-   **Simplify Your Workflow:** Go from dataset preparation to a ready-to-use GGUF model in Ollama through a guided, observable process.
+-   **Centralize Monitoring:** Keep an eye on all the moving parts from one clean web interface.
+-   **Deploy with Confidence:** The entire stack is containerized, ensuring a reproducible and easy-to-start environment with a single command.
+
+## Key Features
+
+-   **Unified Service Dashboard:** Monitor the status of all containerized services at a glance.
+-   **One-Click Access:** Provides direct links to the UIs of `easy-dataset`, `LLaMA-Factory`, and `TensorBoard`.
+-   **Automated Model Pipeline:** Orchestrates the post-training workflow:
+    1.  Merges LoRA adapters into the base model.
+    2.  Converts the merged model to GGUF format using `llama.cpp`.
+    3.  Loads the final GGUF model into your local Ollama instance.
+-   **Training Visualization:** Includes an integrated TensorBoard service for real-time monitoring of model training metrics.
+
+## Technology Stack
+
+-   **Backend:** Python, FastAPI
+-   **Frontend:** Vite, React, TypeScript
+-   **Containerization:** Docker, Docker Compose
+-   **Reverse Proxy:** Caddy
+-   **Core Fine-Tuning Tools:** `easy-dataset`, `LLaMA-Factory`
+-   **Model Conversion & Serving:** `llama.cpp`, `Ollama`
+
+---
 
 ## Getting Started
 
