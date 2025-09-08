@@ -4,7 +4,7 @@
 
 # Fine-Tuning Orchestration Dashboard
 
-This project provides a web-based dashboard to orchestrate and monitor `easy-dataset`, `LLaMA-Factory`, and other services, simplifying the workflow for fine-tuning large language models.
+This project provides a web-based dashboard to orchestrate and monitor `easy-dataset`, `LLaMA-Factory`, and other services, simplifying the workflow for fine-tuning large language models. Once a fine tuned model is generated (via LLama-Factory, though other solutions can be used), easily convert to GGUF using llama-cpp and then load the GGUF model to your local Ollama instance using the dashboard. 
 
 ## Features
 
@@ -18,8 +18,7 @@ This project provides a web-based dashboard to orchestrate and monitor `easy-dat
 
 -   Docker and Docker Compose
 -   An NVIDIA GPU with the appropriate drivers installed.
--   Git
-
+  
 ### Configuration
 
 1.  **Clone the Repository:**
@@ -43,8 +42,8 @@ The following variables can be configured in the `.env` file:
 *   `VITE_LLAMA_FACTORY_URL`: The public-facing URL for the LLaMA Factory service. Defaults to `http://localhost:7002`.
 *   `VITE_EASY_DATASET_URL`: The public-facing URL for the Easy Dataset service. Defaults to `http://localhost:7001`.
 *   `VITE_TENSORBOARD_URL`: The public-facing URL for the TensorBoard service. Defaults to `http://localhost:7003`.
-*   `LLAMA_FACTORY_CONTAINER`: The name of the LLaMA Factory Docker container. Defaults to `finetune-llama-factory-1`.
-*   `LLAMA_CPP_CONTAINER`: The name of the llama.cpp Docker container. Defaults to `finetune-llama-cpp-1`.
+*   `LLAMA_FACTORY_CONTAINER`: The name of the LLaMA Factory Docker container. Defaults to `finetune-llama-factory`.
+*   `LLAMA_CPP_CONTAINER`: The name of the llama.cpp Docker container. Defaults to `finetune-llama-cpp`.
 *   `OLLAMA_CONTAINER`: The name of the Ollama Docker container. Defaults to `ollama`.
 
 ### Running the Application
