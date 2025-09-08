@@ -1,0 +1,44 @@
+graph TD
+    subgraph "Project Goal"
+        A("End-to-End Fine-Tuning Workflow")
+    end
+
+    subgraph "User Workflow"
+        B["1. Launch Services via docker-compose"] --> C{Dashboard UI}
+        C -- Monitors --> D[easy-dataset Service]
+        C -- Monitors --> E[LLaMA-Factory Service]
+        C -- Monitors --> F[llama.cpp Service]
+        C -- Monitors --> G[Ollama Service]
+        C -- Monitors --> T[TensorBoard Service]
+        C -- Links to --> H[easy-dataset UI]
+        C -- Links to --> I[LLaMA-Factory UI]
+        C -- Links to --> U[TensorBoard UI]
+        C -- Triggers --> J[Model Merging]
+        J --> K[Model Conversion]
+        K --> L[Ollama Model Loading]
+    end
+
+    subgraph "System Architecture"
+        M["Caddy Reverse Proxy"]
+        N["Frontend: Vite + React"]
+        O["Backend: FastAPI (Orchestrator)"]
+        P["Containerization: Docker"]
+    end
+
+    subgraph "Core Services"
+        D
+        E
+        F
+        G
+        T
+    end
+
+    subgraph "Project Status"
+        Q("Workflow Complete: The end-to-end fine-tuning, merging, conversion, and loading workflow is fully functional.")
+    end
+
+    A --> B
+    M --> N
+    M --> O
+    N & O & P --> C
+    P --> A

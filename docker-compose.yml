@@ -1,0 +1,121 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "7000:8000"
+    volumes:
+      - ./backend/src:/app
+      - ./saves:/app/saves
+      - uploads:/app/uploads
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - OLLAMA_API_URL=${OLLAMA_API_URL}
+      - LLAMA_FACTORY_CONTAINER=${LLAMA_FACTORY_CONTAINER}
+      - LLAMA_CPP_CONTAINER=${LLAMA_CPP_CONTAINER}
+      - OLLAMA_CONTAINER=${OLLAMA_CONTAINER}
+    networks:
+      - docknet
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - VITE_LLAMA_FACTORY_URL=${VITE_LLAMA_FACTORY_URL}
+        - VITE_EASY_DATASET_URL=${VITE_EASY_DATASET_URL}
+        - VITE_TENSORBOARD_URL=${VITE_TENSORBOARD_URL}
+    networks:
+      - docknet
+  caddy:
+    image: caddy:alpine
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+    depends_on:
+      - backend
+    networks:
+      - docknet
+
+  llama-factory:
+    container_name: finetune-llama-factory
+    build:
+      context: ./llama-factory
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - "7002:7860"
+    volumes:
+      - ./data:/app/shared_data
+      - ./hf_cache:/root/.cache/huggingface
+      - ./saves:/app/saves
+      - ./models:/app/models
+      - llama_factory_cache:/app/cache
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+      - MPLCONFIGDIR=/app/cache
+      - HF_HOME=/root/.cache/huggingface
+    networks:
+      - docknet
+
+  easy-dataset:
+    image: ghcr.io/conardli/easy-dataset
+    container_name: easy-dataset
+    ports:
+      - "7001:1717"
+    volumes:
+      - ./data:/app/local-db
+    restart: unless-stopped
+    networks:
+      - docknet
+
+  llama-cpp:
+    container_name: finetune-llama-cpp
+    build:
+      context: ./llama.cpp
+      dockerfile: .devops/cuda.Dockerfile
+      args:
+        - CUDA_VERSION=12.8.1
+      target: full
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ./models:/models
+      - ./data:/data
+      - ./saves:/saves
+      - ./hf_cache:/hf_cache
+    entrypoint: []
+    command: tail -f /dev/null
+    networks:
+      - docknet
+
+  tensorboard:
+    image: tensorflow/tensorflow
+    ports:
+      - "7003:6006"
+    volumes:
+      - ./saves:/app/saves
+    command: tensorboard --logdir /app/saves --bind_all
+    networks:
+      - docknet
+
+volumes:
+  uploads:
+  caddy_data:
+  llama_factory_cache:
+
+networks:
+  docknet:
+    external: true

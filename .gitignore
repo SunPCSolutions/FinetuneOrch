@@ -1,0 +1,35 @@
+# IDE and OS files
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Local Environment Files
+.env
+
+# Node.js
+frontend/node_modules/
+frontend/dist/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+
+# Python
+backend/__pycache__/
+backend/venv/
+backend/*.pyc
+backend/*.pyo
+backend/*.pyd
+
+# Large Data and Model Directories
+models/
+data/
+saves/
+hf_cache/
+uploads/
+
+# Docker
+docker-compose.override.yml

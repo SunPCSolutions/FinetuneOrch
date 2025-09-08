@@ -1,0 +1,7 @@
+:3000 {
+    # API requests go to the backend
+    reverse_proxy /models/* backend:8000
+
+    # All other requests go to the frontend
+    reverse_proxy frontend:3000
+}

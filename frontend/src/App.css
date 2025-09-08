@@ -1,0 +1,77 @@
+.App {
+  padding: 2rem 4rem;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.App-header {
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.App-header h1 {
+  font-size: 2.5rem;
+  color: #343a40;
+  font-weight: 600;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #495057;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+  text-align: left;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid #dee2e6;
+  padding: 0.75rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+input[type="file"] {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+
+button {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+button:hover {
+  background-color: #5a6268;
+}

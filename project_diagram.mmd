@@ -1,0 +1,13 @@
+graph LR
+    A[Input: Transcript] --> B(n8n Workflow);
+    B --> C{Fine-Tuned LLM via Ollama};
+    C --> D[Generate H&P/A&P Note];
+    B --> E{Code DB via Qdrant};
+    D --> |Note Text| B;
+    E --> |Retrieved Codes| B;
+    B --> |Note + Code Context| C;
+    C --> F[Suggest Codes];
+    B --> G[Output: Note + Codes];
+
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#ccf,stroke:#333,stroke-width:2px
